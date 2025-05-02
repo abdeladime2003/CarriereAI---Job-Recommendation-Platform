@@ -7,7 +7,6 @@ import HomePage from './components/Homepage';
 import Signup from './components/Signup';
 import NotFound  from './components/NotFound';
 import Signin from './components/Signin';
-import ImageClassifier from './components/dashbord';
 import CVUpload from './components/CvUpload';
 import VerifyEmail from './components/verifyemail';
 import JobResults from './components/JobResults';
