@@ -11,6 +11,7 @@ from bson import ObjectId
 import os
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from pymongo import MongoClient
 logger.info("Logger initialisé pour le traitement des CVs.")
 
 class CVUploadView(APIView):
@@ -42,12 +43,11 @@ class CVUploadView(APIView):
             logger.info(f"Fichier {file.name} sauvegardé avec succès.")
 
             try:
+                print("tratement du fichier")
                 cv_id = main(file_path , user)  # 🔥 Extraction OCr
                 print(f"📌 [DEBUG] ID du CV après extraction : {cv_id}")
-
-                # 🔥 Vérifier si le CV existe bien en MongoDB
-                from pymongo import MongoClient
-                client = MongoClient("mongodb://localhost:27017/")
+                
+                client = MongoClient("mongodb://172.30.240.1:27017")
                 db = client["job_recommendation"]
                 cv = db["cvs"].find_one({"_id": ObjectId(cv_id)})
 

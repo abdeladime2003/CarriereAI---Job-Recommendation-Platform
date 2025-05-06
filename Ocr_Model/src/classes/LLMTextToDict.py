@@ -3,7 +3,6 @@ import sys
 import logging
 import json
 from typing import Dict
-
 import yaml
 from dotenv import load_dotenv
 load_dotenv('.env')
@@ -23,7 +22,7 @@ class LLMTextToDict:
     Attributes:
         LLM_CONFIG_FILE (str): Path to the YAML configuration file for LLM settings
     """
-    LLM_CONFIG_FILE = r"C:\Users\LENOVO\Desktop\project_job\Ocr_Model\config\llm_config.yaml"
+    LLM_CONFIG_FILE = r"/home/abdo/Job_Recommendation/Ocr_Model/config/llm_config.yaml"
 
     def __init__(self, text: str):
         """
@@ -35,7 +34,6 @@ class LLMTextToDict:
         self.logger = logging.getLogger(__name__)
         self.__input_text = text
 
-
     @property
     def resume_text(self):
         return self.__input_text
@@ -43,7 +41,6 @@ class LLMTextToDict:
     @resume_text.setter
     def resume_text(self, new_input_text):
         self.__input_text = new_input_text
-
 
     def load_api(self) -> str:
         """
@@ -53,11 +50,11 @@ class LLMTextToDict:
             str: The API key for Google's Generative AI
         """
         try:
-            API_KEY = "your api"
+            # Exemple de clé API, vous pouvez aussi la récupérer depuis l'environnement
+            API_KEY = "AIzaSyCFzj-to6tI5m2z0QuxNPdP7wwMG4xfseg"
             return API_KEY
         except Exception as e:
-            self.logger.error(f"Problem occured while reading from .env file: {e}")
-
+            self.logger.error(f"Problem occurred while reading from .env file: {e}")
 
     def load_config(self) -> Dict:
         """
@@ -67,14 +64,16 @@ class LLMTextToDict:
             dict: Configuration settings
         """
         if not os.path.exists(LLMTextToDict.LLM_CONFIG_FILE):
-            raise FileNotFoundError(f"Prompt file not found at {LLMTextToDict.LLM_CONFIG_FILE}")
+            raise FileNotFoundError(f"Configuration file not found at {LLMTextToDict.LLM_CONFIG_FILE}")
         try:
             with open(LLMTextToDict.LLM_CONFIG_FILE, 'r') as file:
                 config = yaml.safe_load(file)
+            if "prompt_file" not in config:
+                raise KeyError("Missing 'prompt_file' key in the configuration file.")
             return config
         except Exception as e:
             self.logger.error(f"Problem while reading the config file {LLMTextToDict.LLM_CONFIG_FILE}: {e}")
-
+            raise
 
     def load_prompt(self) -> str:
         """
@@ -83,15 +82,14 @@ class LLMTextToDict:
         Returns:
             str: The prompt template
         """
-        FILE_PATH = r"C:\Users\LENOVO\Desktop\project_job\Ocr_Model\src\resources\base_prompt.txt"
+        FILE_PATH = self.load_config()["prompt_file"]
         if not os.path.exists(FILE_PATH):
             raise FileNotFoundError(f"Prompt file not found at {FILE_PATH}")
         try:
             with open(FILE_PATH, 'r') as file:
                 return file.read()
         except Exception as e:
-            self.logger.error(f"Problem occured while reading the prompt file {FILE_PATH}: {e}")
-
+            self.logger.error(f"Problem occurred while reading the prompt file {FILE_PATH}: {e}")
 
     @staticmethod
     def process_text(text) -> Dict:
@@ -125,8 +123,7 @@ class LLMTextToDict:
         else:
             raise TextFormatException("Invalid curly brackets found in the text.")
 
-
-    def pormpt_llm(self) -> Dict:
+    def prompt_llm(self) -> Dict:
         """
         Process the input text through the LLM model and convert the response to a dictionary.
         
@@ -149,8 +146,7 @@ class LLMTextToDict:
             data = self.process_text(response.text)
             return data
         except Exception as e:
-            self.logger.error(f"Problem occured while prompting the LLM: {e}")
-    
+            self.logger.error(f"Problem occurred while prompting the LLM: {e}")
 
     @staticmethod
     def save_as_json(data, save_path):
@@ -162,5 +158,5 @@ class LLMTextToDict:
             save_path (str): The path where the JSON file will be saved
         """
         with open(save_path, 'w') as json_file:
-            json.dumps(data, json_file, indent=4)
+            json.dump(data, json_file, indent=4)
         print(f"JSON file saved as {save_path}")

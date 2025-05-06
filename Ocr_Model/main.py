@@ -6,10 +6,8 @@ from Ocr_Model.src.classes.PdfExtractText import PdfExtractText
 from Ocr_Model.src.classes.LLMTextToDict import LLMTextToDict
 from Ocr_Model.src.classes.MongoDbStorage import get_mongo_connection
 import warnings
-
 warnings.filterwarnings("ignore")
-CONFIG_FILE = r"C:\Users\LENOVO\Desktop\project_job\Ocr_Model\config\main_config.yaml"
-
+CONFIG_FILE = r"/home/abdo/Job_Recommendation/Ocr_Model/config/main_config.yaml"
 def load_config(config_file=CONFIG_FILE):
     with open(config_file, 'r') as file:
         config = yaml.safe_load(file)
@@ -33,6 +31,7 @@ def main(file_path, user):
         print("Formating the extracted text...")
         formated_text = LLMTextToDict(extracted_text).pormpt_llm()
         print("Text is formated successfully!")
+        print(f"Formated text: {formated_text}")
     except Exception as e:
         print(f"Error while formating text: {e}")
         return None
@@ -47,4 +46,4 @@ def main(file_path, user):
         return None
     return formated_text["_id"]
 if __name__ == "__main__":
-    main()
+    main(r"/home/abdo/Job_Recommendation/Ocr_Model/uploads/test.pdf" , "abdeladime")

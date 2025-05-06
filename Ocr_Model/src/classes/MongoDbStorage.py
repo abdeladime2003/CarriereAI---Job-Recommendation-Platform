@@ -3,7 +3,7 @@ from pymongo import MongoClient, errors
 def get_mongo_connection():
     try:
         # Connexion au serveur MongoDB
-        client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=3000)
+        client = MongoClient('mongodb://172.30.240.1:27017', serverSelectionTimeoutMS=3000)
         
         # Vérification de la connexion au serveur
         client.server_info()  # Déclenche une exception si le serveur est injoignable

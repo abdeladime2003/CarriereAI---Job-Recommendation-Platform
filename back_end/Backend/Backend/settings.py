@@ -88,7 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+            ],  
         },
     },
 ]
@@ -100,17 +100,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 # settings.py
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Job_Db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'Job_Db',  # Nom de la base de données
+        'USER': 'postgres',  # Utilisateur de la base de données
+        'PASSWORD': 'postgres',  # Mot de passe de l'utilisateur
+        'HOST': '172.30.240.1',  # L'adresse IP de Windows dans WSL
+        'PORT': '5432',  # Le port par défaut pour PostgreSQL
     }
 }
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 

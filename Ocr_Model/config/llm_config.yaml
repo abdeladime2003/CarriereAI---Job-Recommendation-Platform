@@ -1,2 +1,2 @@
 model: gemini-1.5-flash
-prompt_file: src/resources/base_prompt.txt
+prompt_file: r"/home/abdo/Job_Recommendation/Ocr_Model/src/resources/base_prompt.txt"
