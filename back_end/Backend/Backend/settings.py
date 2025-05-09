@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'user',
     'cvs',
     'Feedbacks',
+    'Company',
 ]
 AUTH_USER_MODEL = 'user.User'
 

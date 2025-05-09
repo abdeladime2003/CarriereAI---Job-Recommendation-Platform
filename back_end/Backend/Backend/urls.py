@@ -31,10 +31,10 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('job_api.urls')),
+    path('Compagny/' , include('Company.urls')),
     path('user/', include('user.urls')),
     path('cvs/', include('cvs.urls')),
     path('feedbacks/', include('Feedbacks.urls')),

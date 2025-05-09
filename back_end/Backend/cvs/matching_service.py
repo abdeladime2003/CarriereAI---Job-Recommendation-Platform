@@ -2,8 +2,8 @@ import pymongo
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from bson import ObjectId
-# Connexion MongoDB
-client = pymongo.MongoClient("mongodb://localhost:27017/")
+# Connexion MongoDB 
+client = pymongo.MongoClient('mongodb://172.30.240.1:27017', serverSelectionTimeoutMS=5000)
 db = client["job_recommendation"]
 cv_collection = db["cvs"]
 jobs_collection = db["processed_jobs"]

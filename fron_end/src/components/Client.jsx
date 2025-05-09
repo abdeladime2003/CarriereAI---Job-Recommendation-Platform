@@ -2,19 +2,14 @@ import React from "react";
 import Navbar from "./NavBar";
 import Header from "./Header";
 import Functionalities from "./Functionalities";
-import CallToAction from "./CallToAction";
-import Footer from "./Footer";
-
-const Home = () => {
+const Client = () => {
   return (
     <>
       <Navbar />
       <Header />
       <Functionalities />
-      <CallToAction />
-      <Footer />
     </>
   );
 };
 
-export default Home;
+export default Client;

@@ -29,7 +29,7 @@ def main(file_path, user):
         return None
     try:
         print("Formating the extracted text...")
-        formated_text = LLMTextToDict(extracted_text).pormpt_llm()
+        formated_text = LLMTextToDict(extracted_text).prompt_llm()
         print("Text is formated successfully!")
         print(f"Formated text: {formated_text}")
     except Exception as e:

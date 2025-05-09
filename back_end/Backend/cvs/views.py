@@ -46,20 +46,16 @@ class CVUploadView(APIView):
                 print("tratement du fichier")
                 cv_id = main(file_path , user)  # 🔥 Extraction OCr
                 print(f"📌 [DEBUG] ID du CV après extraction : {cv_id}")
-                
                 client = MongoClient("mongodb://172.30.240.1:27017")
                 db = client["job_recommendation"]
                 cv = db["cvs"].find_one({"_id": ObjectId(cv_id)})
 
-                print(f"📌 [DEBUG] Données du CV récupérées : {cv}")
+                print(f"📌 [DEBUG] Données du CV récupérées")
 
                 if not cv:
                     print("⚠️ Le CV n'existe pas en base après l'insertion.")
                     return Response({"error": "Le CV n'a pas été trouvé en base."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-                # 🔥 Lancer le matching
                 recommendations = match_cv_to_jobs(cv_id)
-
                 print(f"📌 [DEBUG] Recommandations générées : {len(recommendations)}")
                 os.remove(file_path)  # Supprimer le fichier après traitement
                 return Response({
