@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 class FlexibleJobOfferSerializer(serializers.Serializer):
     titre = serializers.CharField(max_length=255, required=False, allow_blank=True)
     entreprise = serializers.CharField(max_length=255, required=False, allow_blank=True)

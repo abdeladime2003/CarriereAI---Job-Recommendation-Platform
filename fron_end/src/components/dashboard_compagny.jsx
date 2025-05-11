@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { 
   Building, 
   PlusCircle, 
@@ -28,9 +30,10 @@ import {
 } from "lucide-react";
 
 const EnterpriseDashboard = () => {
-  // État pour stocker les données de l'entreprise
+  const navigate = useNavigate();
+  const company_name = localStorage.getItem("user").replace(/"/g, '')
   const [companyData] = useState({
-    name: "TechSolutions SAS",
+    name: company_name , 
     profileCompletion: 70,
     pendingApplications: 12,
     activeOffers: 3,
@@ -154,10 +157,13 @@ const EnterpriseDashboard = () => {
                 Prêt à trouver vos prochains talents ? Voici les prochaines étapes.
               </p>
             </div>
-            <button className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-              <PlusCircle className="w-5 h-5" />
-              Publier une offre
-            </button>
+          <button
+      className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+      onClick={() => navigate("/Compagny/post_job")}
+    >
+      <PlusCircle className="w-5 h-5" />
+      Publier une offre
+    </button>
           </div>
 
           {/* Stats cards */}

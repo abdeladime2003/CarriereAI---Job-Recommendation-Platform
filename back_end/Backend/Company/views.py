@@ -4,6 +4,7 @@ from rest_framework import status
 from .serializers import CompanySignupSerializer
 from .models import Company
 from django.contrib.auth.hashers import check_password
+from rest_framework_simplejwt.tokens import RefreshToken
 class CompanySignupView(APIView):
     def post(self, request):
         serializer = CompanySignupSerializer(data=request.data)
@@ -11,7 +12,6 @@ class CompanySignupView(APIView):
             serializer.save()
             return Response({"message": "Entreprise inscrite avec succès."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#                 }, status=status.HTTP_200_OK
 class CompanySigninView(APIView):
     def post(self, request):
         email = request.data.get('email')
@@ -20,7 +20,16 @@ class CompanySigninView(APIView):
         try:
             company = Company.objects.get(email=email)
             if check_password(password, company.password):
-                return Response({"message": "Connexion réussie", "company_id": company.id})
+                refresh = RefreshToken.for_user(company)
+
+                return Response({
+                    "message": "Connexion réussie",
+                    "company_id": company.id,
+                    "company_name" : company.company_name,
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh)
+                }, status=status.HTTP_200_OK)
+                
             else:
                 return Response({"error": "Mot de passe incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
         except Company.DoesNotExist:

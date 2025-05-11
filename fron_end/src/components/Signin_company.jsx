@@ -45,9 +45,10 @@ const EnterpriseSignin = () => {
         password,
       });
       if (response.status === 200) {
-        localStorage.setItem("accessToken", response.data.access_token);
-        localStorage.setItem("refreshToken", response.data.refresh_token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("accessToken", response.data.access);
+        localStorage.setItem("refreshToken", response.data.refresh);
+        localStorage.setItem("company_name", JSON.stringify(response.data.company_name));
+        localStorage.setItem("company_id", response.data.company_id);
         navigate("/Compagny/dashboard");
       }
   
