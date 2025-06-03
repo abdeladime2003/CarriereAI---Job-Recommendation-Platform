@@ -51,7 +51,7 @@ class LLMTextToDict:
         """
         try:
             # Exemple de clé API, vous pouvez aussi la récupérer depuis l'environnement
-            API_KEY = "AIzaSyCFzj-to6tI5m2z0QuxNPdP7wwMG4xfseg"
+            API_KEY = ""
             return API_KEY
         except Exception as e:
             self.logger.error(f"Problem occurred while reading from .env file: {e}")
